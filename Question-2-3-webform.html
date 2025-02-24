@@ -32,26 +32,25 @@
       <fieldset>
         <legend>Basic information</legend>
         <div class="control">
-          <!-- add for="fullname" to connect, add aria-hidden for * span -->
-          <label for="fullname">Full name <span class="required" aria-hidden="true">*</span></label>
-          <!-- changed id from name to full name to connect with label
-           added required and aria-required -->
-          <input id="fullname" name="fullname" type="text" required="required" aria-required="true"/>
+          <!-- add for="name" to connect -->
+          <label for="name">Full name <span class="required">*</span></label>
+          <!-- added required and aria-required, change name="name" -->
+          <input id="name" name="name" type="text" required aria-required="true"/>
         </div>
         <div class="control">
           <!-- add for="biography" and aria-describedby="biodescribe" to associate -->
-          <label for="biography">Biography</label>
-          <textarea id="biography" name="biography" type="text" aria-describedby="biodescribe"></textarea>
+          <label for="biography">Biography <span class="required">*</span></label>
+          <textarea id="biography" name="biography" type="text" aria-describedby="biodescribe" required></textarea>
           <!-- add id="biodescribe" -->
           <span id="biodescribe">Include examples on your skills in JavaScript.</span>
         </div>
       </fieldset>
         <!-- add fieldset and legent for checkboxes -->
         <fieldset>
-          <legend>Gender</legend>
+          <legend>Gender<span class="required">*</span></legend>
           <div class="control">
-            <!-- add for in label -->
-            <input id="gender_male" name="gender" type="radio" value="male" />
+            <!-- add for in label, add required -->
+            <input id="gender_male" name="gender" type="radio" value="male" required/>
             <label for="gender_male">Male</label>
           </div>
           <div class="control">
@@ -61,7 +60,8 @@
           </div>
         </fieldset>
         <div class="control">
-          <input id="accept_agbs" name="accept_agbs" type="checkbox" value="1" /><label for="accept_agbs">I accept the terms and conditions</label>
+          <!-- add required -->
+          <input id="accept_agbs" name="accept_agbs" type="checkbox" value="1" required/><label for="accept_agbs">I accept the terms and conditions<span class="required">*</span></label>
         </div>
         <div class="control">
           <!-- added instructions by aria-label -->
@@ -110,7 +110,8 @@
               $referencedElement = $input;
             }
       // R.G. hint: fix next line ;)
-            $error = $('<a>' + message + '</a>');
+            // modified $error to link to the field having issue
+            $error = $('<a href="#' + input + '">' + message + '</a>');
             $error.click(function (e) {
               // If we rely on the link's href pointing to the input's ID, it doesn't trigger forms mode in screen readers
               $referencedElement.focus();
@@ -121,7 +122,7 @@
       
             if ($(':not(form):focus').length === 0) {
               // See https://stackoverflow.com/questions/46134247/jquery-setting-focus-doesnt-work-in-ie11/
-            
+              $errorContainer.focus();
             }
           } else {
             if ($input.is(':checkbox')) {
@@ -145,6 +146,11 @@
       
             if ($('.error').length === 0) {
               return alert('All inputs are valid.');
+            } else {
+              // make the error read out
+              $('.errors').attr('role', 'alert');
+              $('.errors').focus();
+              errorsExist = true;
             }
           }
         });
