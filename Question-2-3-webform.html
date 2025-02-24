@@ -35,12 +35,12 @@
           <!-- add for="name" to connect -->
           <label for="name">Full name <span class="required">*</span></label>
           <!-- added required and aria-required, change name="name" -->
-          <input id="name" name="name" type="text" required aria-required="true"/>
+          <input id="name" name="name" type="text"/>
         </div>
         <div class="control">
           <!-- add for="biography" and aria-describedby="biodescribe" to associate -->
           <label for="biography">Biography <span class="required">*</span></label>
-          <textarea id="biography" name="biography" type="text" aria-describedby="biodescribe" required></textarea>
+          <textarea id="biography" name="biography" type="text" aria-describedby="biodescribe"></textarea>
           <!-- add id="biodescribe" -->
           <span id="biodescribe">Include examples on your skills in JavaScript.</span>
         </div>
@@ -49,8 +49,8 @@
         <fieldset>
           <legend>Gender<span class="required">*</span></legend>
           <div class="control">
-            <!-- add for in label, add required -->
-            <input id="gender_male" name="gender" type="radio" value="male" required/>
+            <!-- add for in label -->
+            <input id="gender_male" name="gender" type="radio" value="male"/>
             <label for="gender_male">Male</label>
           </div>
           <div class="control">
@@ -60,8 +60,7 @@
           </div>
         </fieldset>
         <div class="control">
-          <!-- add required -->
-          <input id="accept_agbs" name="accept_agbs" type="checkbox" value="1" required/><label for="accept_agbs">I accept the terms and conditions<span class="required">*</span></label>
+          <input id="accept_agbs" name="accept_agbs" type="checkbox" value="1"/><label for="accept_agbs">I accept the terms and conditions<span class="required">*</span></label>
         </div>
         <div class="control">
           <!-- added instructions by aria-label -->
@@ -87,6 +86,7 @@
             return decodeURI(results[1]) || null;
           }
         };
+
       
         validateInput = function validateInput(input, message) {
           var $elementToDescribe, $error, $errorContainer, $fieldset, $input, $referencedElement, value;
@@ -143,14 +143,9 @@
             validateInput('biography', 'Please tell us something about your history!');
             validateInput('gender', 'Please tell us your gender!');
             validateInput('accept_agbs', 'You must accept our terms and conditions!');
-      
-            if ($('.error').length === 0) {
+      // changed error to errors
+            if ($('.errors').length === 0) {
               return alert('All inputs are valid.');
-            } else {
-              // make the error read out
-              $('.errors').attr('role', 'alert');
-              $('.errors').focus();
-              errorsExist = true;
             }
           }
         });
